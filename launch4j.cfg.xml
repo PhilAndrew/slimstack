@@ -1,0 +1,32 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>c:\home\projects\slimstack\SLiMStack.jar</jar>
+  <outfile>c:\home\projects\slimstack\SLiMStack.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://www.oracle.com/technetwork/java/javase/downloads/index.html</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>C:\home\projects\SLiMStack\icon.ico</icon>
+  <singleInstance>
+    <mutexName>slimstack_single_instance</mutexName>
+    <windowTitle></windowTitle>
+  </singleInstance>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+  </jre>
+  <splash>
+    <file>C:\home\projects\SLiMStack\image\slimstack.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>5</timeout>
+    <timeoutErr>false</timeoutErr>
+  </splash>
+</launch4jConfig>

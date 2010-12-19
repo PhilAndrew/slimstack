@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SLiMStack:jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="SLiMStack.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="SLiMStack" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/ini4j-0.5.2-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/sbt-launch-0.7.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

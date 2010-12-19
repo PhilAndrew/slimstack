@@ -1,0 +1,149 @@
+package com.orsa.slimstack.app;
+
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
+
+/**
+ */
+public class EditorFrame extends JFrame {
+
+    RSyntaxTextArea area = null;
+
+    public EditorFrame(String filePath) {
+        setLayout(new BorderLayout());
+
+        Image favIcon = Toolkit.getDefaultToolkit().getImage("image/editicon.png");
+        setIconImage(favIcon);
+
+        JToolBar toolBar = new JToolBar("Still draggable");
+        addButtons(toolBar);
+        //JPanel toolbar = new JPanel();
+        //toolbar.setSize(100,10);
+        add(toolBar, BorderLayout.NORTH);
+
+        area = new RSyntaxTextArea();
+        area.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SCALA);
+        RTextScrollPane sp = new RTextScrollPane(area);
+        setFont(area, new Font("Courier New", Font.PLAIN, 12));
+        add(sp, BorderLayout.CENTER);
+
+        setSize(500, 500);
+
+        try {
+            loadFile(new File(".").getCanonicalPath() + "/liftweb/src/main/scala/code/snippet/PetSnippet.scala");
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        setVisible(true);
+    }
+
+    private void loadFile(String s) {
+        try {
+            area.setText(convertStreamToString(new FileInputStream(new File(s))));
+            area.setCaretPosition(0);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    public String convertStreamToString(InputStream is)
+            throws IOException {
+        /*
+         * To convert the InputStream to String we use the
+         * Reader.read(char[] buffer) method. We iterate until the
+         * Reader return -1 which means there's no more data to
+         * read. We use the StringWriter class to produce the string.
+         */
+        if (is != null) {
+            Writer writer = new StringWriter();
+
+            char[] buffer = new char[1024];
+            try {
+                Reader reader = new BufferedReader(
+                        new InputStreamReader(is, "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
+            }
+            return writer.toString();
+        } else {
+            return "";
+        }
+    }
+
+    static final private String PREVIOUS = "previous";
+
+    static final private String UP = "up";
+
+    static final private String NEXT = "next";
+
+    private void addButtons(JToolBar toolBar) {
+        JButton button = null;
+
+        //first button
+        button = makeNavigationButton("Save24", "Save", "Save file", "Save");
+        toolBar.add(button);
+
+        //second button
+        /*button = makeNavigationButton("Up24", UP, "Up to something-or-other",
+            "Up");
+        toolBar.add(button);
+
+        //third button
+        button = makeNavigationButton("Forward24", NEXT,
+            "Forward to something-or-other", "Next");
+        toolBar.add(button);*/
+    }
+
+    protected JButton makeNavigationButton(String imageName,
+        String actionCommand, String toolTipText, String altText) {
+        //Look for the image.
+        //String imgLocation = "toolbarButtonGraphics/navigation/" + imageName + ".gif";
+//        URL imageURL = SwingToolBarDemo.class.getResource(imgLocation);
+
+        //Create and initialize the button.
+        JButton button = new JButton();
+        button.setActionCommand(actionCommand);
+        button.setToolTipText(toolTipText);
+    //    button.addActionListener(this);
+
+//        if (imageURL != null) { //image found
+//        button.setIcon(new ImageIcon(imageURL, altText));
+//        } else { //no image found
+        button.setText(altText);
+        //System.err.println("Resource not found: " + imgLocation);
+    //}
+
+        return button;
+    }
+
+    /**
+    * Set the font for all token types.
+    *
+    * @param textArea The text area to modify.
+    * @param font The font to use.
+    */
+   public static void setFont(RSyntaxTextArea textArea, Font font) {
+      if (font!=null) {
+         SyntaxScheme ss = textArea.getSyntaxScheme();
+         ss = (SyntaxScheme)ss.clone();
+         for (int i=0; i<ss.styles.length; i++) {
+            if (ss.styles[i]!=null) {
+               ss.styles[i].font = font;
+          }
+       }
+       textArea.setSyntaxScheme(ss);
+       textArea.setFont(font);
+      }
+   }
+}
